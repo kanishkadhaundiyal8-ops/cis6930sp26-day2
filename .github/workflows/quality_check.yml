@@ -1,0 +1,26 @@
+name: Code Quality Check
+
+on: [push, pull_request]
+
+jobs:
+  lint-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install flake8
+
+      - name: Run Linter (Flake8)
+        # This runs a check. If it finds errors, the build FAILS.
+        # E402 = module level import not at top of file
+        # F401 = module imported but unused (We expect this to trigger!)
+        run: |
+          flake8 src/ --count --select=E9,F63,F7,F82,F401 --show-source --statistics
