@@ -1,5 +1,4 @@
 
-import os
 
 def my_function():
     x = 10
